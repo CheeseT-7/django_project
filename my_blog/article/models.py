@@ -8,7 +8,7 @@ from django.utils import timezone
 
 
 # 博客文章数据模型
-class Article(models.Model):
+class ArticlePost(models.Model):
     # 文章作者，on_delete参数用于指定数据删除的方式
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
