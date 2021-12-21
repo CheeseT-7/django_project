@@ -18,5 +18,5 @@ app_name = 'article'
 
 urlpatterns = [
     # path函数将url映射到视图
-    path('article_list/', views.article_list, name='article_list'),
+    path('article-list/', views.article_list, name='article_list'),
 ]
