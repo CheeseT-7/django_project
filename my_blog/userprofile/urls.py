@@ -1,0 +1,20 @@
+#!/user/bin/env python
+# coding=utf-8
+"""
+@project : django_project
+@author  : CheeseT
+#@file   : urls.py
+#@ide    : PyCharm
+#@time   : 2022-01-05 21:38:39
+"""
+from django.urls import path
+from . import views
+
+app_name = 'userprofile'
+
+urlpatterns = [
+    # 用户登录
+    path('login/', views.user_login, name='login'),
+    # 用户退出
+    path('logout/', views.user_logout, name='logout')
+]
