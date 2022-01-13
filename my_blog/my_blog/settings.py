@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'article',
     'userprofile',
+    'password_reset',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,16 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# SMTP服务器，改为自己的发件邮箱的SMTP
+EMAIL_HOST = 'smtp.163.com'
+# 发件邮箱
+EMAIL_HOST_USER = 'tqs173@163.com'
+# 发件邮箱密码
+EMAIL_HOST_PASSWORD = 'PALTCUIZUMKJRDFM'
+# 发送邮件的端口
+EMAIL_PORT = 25
+# 是否使用TLS
+EMAIL_USE_TLS = True
+# 默认的发件人
+DEFAULT_FROM_EMAIL = 'TQS的博客 <tqs173@163.com>'
