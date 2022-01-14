@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# 为了进行avatar图片保存引入模块
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,3 +28,6 @@ urlpatterns = [
     path('password-reset/', include('password_reset.urls')),
 
 ]
+
+# 为了进行avatar图片保存添加
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
