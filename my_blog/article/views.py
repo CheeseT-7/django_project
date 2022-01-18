@@ -10,6 +10,8 @@ from .forms import ArticlePostForm
 from django.contrib.auth.models import User
 # 引入分页模块
 from django.core.paginator import Paginator
+# 引入登录确认模块
+from django.contrib.auth.decorators import login_required
 
 # 引入markdown模块
 import markdown
@@ -39,6 +41,10 @@ def article_list(request):
 def article_detail(request, id):
     # 取出相应的文章
     article = ArticlePost.objects.get(id=id)
+
+    # 浏览量+1
+    article.total_views += 1
+    article.save(update_fields=['total_views'])
 
     # 将markdown语法渲染成html样式
     article.body = markdown.markdown(article.body,
@@ -107,6 +113,7 @@ def article_safe_delete(request, id):
 
 
 # 更新文章
+@login_required(login_url='/userprofile/login')
 def article_update(request, id):
     """
     更新文章的视图函数
@@ -118,6 +125,11 @@ def article_update(request, id):
     """
     # 获取需要修改的具体文章对象
     article = ArticlePost.objects.get(id=id)
+
+    # 过滤非作者的用户
+    if request.user != article.author:
+        return HttpResponse('抱歉，你无权修改这篇文章。')
+
     # 判断用户是否为POST提交表单数据
     if request.method == 'POST':
         # 将提交的数据复制到表单实例中
