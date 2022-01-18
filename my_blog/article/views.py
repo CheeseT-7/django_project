@@ -8,6 +8,8 @@ from .models import ArticlePost
 from .forms import ArticlePostForm
 # 引入User模型
 from django.contrib.auth.models import User
+# 引入分页模块
+from django.core.paginator import Paginator
 
 # 引入markdown模块
 import markdown
@@ -18,7 +20,15 @@ import markdown
 # 视图函数
 def article_list(request):
     # 取出所有博客文章
-    articles = ArticlePost.objects.all()
+    articles_list = ArticlePost.objects.all()
+
+    # 每页显示一篇文章
+    paginator = Paginator(articles_list, 4)
+    # 获取url中的页码
+    page = request.GET.get('page')
+    # 将导航对象相应的页码内容给的articles
+    articles = paginator.get_page(page)
+
     # 需要传递给模版（templates）的对象
     context = {'articles': articles}
     # render函数：载入模版，并返回context对象
