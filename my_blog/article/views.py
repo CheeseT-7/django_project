@@ -14,6 +14,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 # 引入Q对象
 from django.db.models import Q
+# 引入评论模块的Comment
+from comment.models import Comment
 
 # 引入markdown模块
 import markdown
@@ -61,6 +63,9 @@ def article_detail(request, id):
     # 取出相应的文章
     article = ArticlePost.objects.get(id=id)
 
+    # 取出文章代码
+    comments = Comment.objects.filter(article=id)
+
     # 浏览量+1
     article.total_views += 1
     article.save(update_fields=['total_views'])
@@ -78,7 +83,7 @@ def article_detail(request, id):
     article.body = md.convert(article.body)
 
     # 需要传递给模版的对象
-    context = {'article': article, 'toc': md.toc}
+    context = {'article': article, 'toc': md.toc, 'comments': comments}
     # 载入模版，并返回context对象
     return render(request, 'article/detail.html', context)
 
